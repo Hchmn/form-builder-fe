@@ -1,0 +1,12 @@
+dist/
+build/
+coverage/
+public/
+
+node_modules/
+package-lock.json
+package.json
+
+*.min.js
+.github/
+README.md
