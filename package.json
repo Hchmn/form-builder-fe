@@ -6,8 +6,8 @@
   "homepage": "https://Hchmn.github.io/form-builder-fe",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "deploy": "gh-pages -d build",
+    "build": "vite build",
+    "deploy": "gh-pages -d dist -u 'github-actions-bot <support+actions@github.com>'",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write .",
     "preview": "vite preview",
