@@ -1,17 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// Determine the base path dynamically
-const isProduction = process.env.NODE_ENV === 'production';
+const baseURL = '/form-builder-fe/';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: isProduction ? '/form-builder-fe/' : '/',
+  base: baseURL,
   plugins: [react()],
   resolve: {
-    alias: [
-      {find: /^~/, replacement:''}
-    ]
+    alias: [{ find: /^~/, replacement: '' }],
   },
   css: {
     preprocessorOptions: {
