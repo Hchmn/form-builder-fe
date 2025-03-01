@@ -4,6 +4,7 @@ coverage/
 public/
 
 node_modules/
+src/modules/form-builder/Editor.tsx
 package-lock.json
 package.json
 
