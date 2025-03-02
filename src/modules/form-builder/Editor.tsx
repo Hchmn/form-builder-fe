@@ -17,6 +17,7 @@ import {
   ViewportPanel,
   ViewPanel,
   SettingsPanel,
+  ComponentTreeWidget,
 } from '@designable/react';
 import { SettingsForm } from '@designable/react-settings-form';
 import {
@@ -29,6 +30,7 @@ import { saveSchema } from './service';
 import PreviewWidget from './widgets/PreviewWidget';
 import SchemaEditorWidget from './widgets/SchemaEditorWidget';
 import { LogoWidget } from './widgets';
+import { Field } from './components';
 
 GlobalRegistry.registerDesignerLocales({
   'en-US': {
@@ -68,7 +70,7 @@ const FormEditor: React.FC<FormEditorProps> = ({ children }) => {
   return (
     <Designer engine={engine}>
       {children}
-      <StudioPanel logo={<LogoWidget/>}>
+      <StudioPanel logo={<LogoWidget />}>
         <CompositePanel>
           <CompositePanel.Item title="panels.Component" icon="Component">
             <ResourceWidget title="sources.Inputs" sources={[]} />
@@ -89,9 +91,15 @@ const FormEditor: React.FC<FormEditorProps> = ({ children }) => {
               <ViewToolsWidget use={['DESIGNABLE', 'PREVIEW', 'JSONTREE']} />
             </ToolbarPanel>
             <ViewportPanel>
-              {/* <ViewPanel type="DESIGNABLE">
-                {() => <ComponentTreeWidget components={} />}
-              </ViewPanel> */}
+              <ViewPanel type="DESIGNABLE">
+                {() => (
+                  <ComponentTreeWidget
+                    components={{
+                      Field,
+                    }}
+                  />
+                )}
+              </ViewPanel>
               <ViewPanel type="JSONTREE" scrollable={false}>
                 {(tree, onChange) => (
                   <SchemaEditorWidget tree={tree} onChange={onChange} />
