@@ -1,9 +1,4 @@
-import {
-  createDesigner,
-  GlobalRegistry,
-  KeyCode,
-  Shortcut,
-} from '@designable/core';
+import { GlobalRegistry } from '@designable/core';
 import {
   CompositePanel,
   Designer,
@@ -12,14 +7,15 @@ import {
   ResourceWidget,
   SettingsPanel,
   StudioPanel,
-  Workbench,
 } from '@designable/react';
 import { SettingsForm } from '@designable/react-settings-form';
 import 'antd/dist/antd.less';
-import React, { ReactNode, useMemo } from 'react';
-import { saveSchema } from './service';
+import React, { useMemo } from 'react';
+import { Input } from './components/Input/component';
+import { initDesigner } from './service';
 import { LogoWidget } from './widgets';
-import { Workspace } from './Workspace';
+import { ActionsWidget } from './widgets/ActionsWidget';
+import { WorkspaceManager } from './WorkspaceManager';
 
 GlobalRegistry.registerDesignerLocales({
   'en-US': {
@@ -33,59 +29,38 @@ GlobalRegistry.registerDesignerLocales({
   },
 });
 
-interface FormEditorProps {
-  children?: ReactNode;
-}
+const FormEditor: React.FC = ({ children }) => {
+  const engine = useMemo(() => initDesigner(), []);
 
-const FormEditor: React.FC<FormEditorProps> = ({ children }) => {
-  const engine = useMemo(
-    () =>
-      createDesigner({
-        shortcuts: [
-          new Shortcut({
-            codes: [
-              [KeyCode.Meta, KeyCode.S],
-              [KeyCode.Control, KeyCode.S],
-            ],
-            handler(ctx) {
-              saveSchema(ctx.engine);
-            },
-          }),
-        ],
-        rootComponentName: 'Form',
-      }),
-    [],
-  );
+  engine.workbench.addWorkspace({ id: 'form-0', title: 'form-0' });
   return (
     <Designer engine={engine}>
       {children}
-      <Workbench>
-        <StudioPanel logo={<LogoWidget />}>
-          <CompositePanel>
-            {CompositePanel.Item && (
-              <CompositePanel.Item title="panels.Component" icon="Component">
-                <ResourceWidget title="sources.Inputs" sources={[]} />
-                <ResourceWidget title="sources.Layouts" sources={[]} />
-                <ResourceWidget title="sources.Displays" sources={[]} />
-              </CompositePanel.Item>
-            )}
-            {CompositePanel.Item && (
-              <CompositePanel.Item title="panels.OutlinedTree" icon="Outline">
-                <OutlineTreeWidget />
-              </CompositePanel.Item>
-            )}
-            {CompositePanel.Item && (
-              <CompositePanel.Item title="panels.History" icon="History">
-                <HistoryWidget />
-              </CompositePanel.Item>
-            )}
-          </CompositePanel>
-          <Workspace formId="form" />
-          <SettingsPanel title="panels.PropertySettings">
-            <SettingsForm uploadAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" />
-          </SettingsPanel>
-        </StudioPanel>
-      </Workbench>
+      <StudioPanel logo={<LogoWidget />} actions={<ActionsWidget />}>
+        <CompositePanel>
+          {CompositePanel.Item && (
+            <CompositePanel.Item title="panels.Component" icon="Component">
+              <ResourceWidget title="sources.Inputs" sources={[Input]} />
+              <ResourceWidget title="sources.Layouts" sources={[]} />
+              <ResourceWidget title="sources.Displays" sources={[]} />
+            </CompositePanel.Item>
+          )}
+          {CompositePanel.Item && (
+            <CompositePanel.Item title="panels.OutlinedTree" icon="Outline">
+              <OutlineTreeWidget />
+            </CompositePanel.Item>
+          )}
+          {CompositePanel.Item && (
+            <CompositePanel.Item title="panels.History" icon="History">
+              <HistoryWidget />
+            </CompositePanel.Item>
+          )}
+        </CompositePanel>
+        <WorkspaceManager />
+        <SettingsPanel title="panels.PropertySettings">
+          <SettingsForm />
+        </SettingsPanel>
+      </StudioPanel>
     </Designer>
   );
 };
