@@ -1,11 +1,17 @@
+import { ITreeNode } from '@designable/core';
 import {
   transformToSchema,
   transformToTreeNode,
 } from '@designable/formily-transformer';
 import { MonacoInput } from '@designable/react-settings-form';
+import { FC } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SchemaEditorWidget = (props: any) => {
+interface SchemaEditorWidgetProps {
+  tree: ITreeNode;
+  onChange: (tree: ITreeNode) => void;
+}
+
+const SchemaEditorWidget: FC<SchemaEditorWidgetProps> = (props) => {
   return (
     <MonacoInput
       {...props}

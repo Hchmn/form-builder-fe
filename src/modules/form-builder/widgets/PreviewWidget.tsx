@@ -1,7 +1,7 @@
 import { transformToSchema } from '@designable/formily-transformer';
 import { createForm } from '@formily/core';
 import { createSchemaField } from '@formily/react';
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import {
   Form,
   FormItem,
@@ -28,9 +28,13 @@ import {
   ArrayTable,
   ArrayCards,
 } from '@formily/antd';
+import { ITreeNode } from '@designable/core';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PreviewWidget = (props: any) => {
+interface PreviewWidgetProps {
+  tree: ITreeNode;
+}
+
+const PreviewWidget: FC<PreviewWidgetProps> = (props) => {
   const form = useMemo(() => createForm(), []);
 
   const { form: formProps, schema } = transformToSchema(props.tree);

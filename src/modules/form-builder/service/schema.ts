@@ -52,7 +52,6 @@ export const newSchema = (designer: Engine) => {
   localStorage.removeItem('formily-schema');
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const loadSchema = (designer: Engine, obj: any) => {
   try {
     const form = JSON?.parse(obj['form-schema-file']);

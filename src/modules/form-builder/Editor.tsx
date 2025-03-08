@@ -1,36 +1,25 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import 'antd/dist/antd.less';
-import React, { useMemo, ReactNode } from 'react';
-import {
-  Designer,
-  DesignerToolsWidget,
-  ViewToolsWidget,
-  Workspace,
-  OutlineTreeWidget,
-  ResourceWidget,
-  HistoryWidget,
-  StudioPanel,
-  CompositePanel,
-  WorkspacePanel,
-  ToolbarPanel,
-  ViewportPanel,
-  ViewPanel,
-  SettingsPanel,
-  ComponentTreeWidget,
-} from '@designable/react';
-import { SettingsForm } from '@designable/react-settings-form';
 import {
   createDesigner,
   GlobalRegistry,
-  Shortcut,
   KeyCode,
+  Shortcut,
 } from '@designable/core';
+import {
+  CompositePanel,
+  Designer,
+  HistoryWidget,
+  OutlineTreeWidget,
+  ResourceWidget,
+  SettingsPanel,
+  StudioPanel,
+  Workbench,
+} from '@designable/react';
+import { SettingsForm } from '@designable/react-settings-form';
+import 'antd/dist/antd.less';
+import React, { ReactNode, useMemo } from 'react';
 import { saveSchema } from './service';
-import PreviewWidget from './widgets/PreviewWidget';
-import SchemaEditorWidget from './widgets/SchemaEditorWidget';
 import { LogoWidget } from './widgets';
-import { Field } from './components';
+import { Workspace } from './Workspace';
 
 GlobalRegistry.registerDesignerLocales({
   'en-US': {
@@ -70,51 +59,33 @@ const FormEditor: React.FC<FormEditorProps> = ({ children }) => {
   return (
     <Designer engine={engine}>
       {children}
-      <StudioPanel logo={<LogoWidget />}>
-        <CompositePanel>
-          <CompositePanel.Item title="panels.Component" icon="Component">
-            <ResourceWidget title="sources.Inputs" sources={[]} />
-            <ResourceWidget title="sources.Layouts" sources={[]} />
-            <ResourceWidget title="sources.Displays" sources={[]} />
-          </CompositePanel.Item>
-          <CompositePanel.Item title="panels.OutlinedTree" icon="Outline">
-            <OutlineTreeWidget />
-          </CompositePanel.Item>
-          <CompositePanel.Item title="panels.History" icon="History">
-            <HistoryWidget />
-          </CompositePanel.Item>
-        </CompositePanel>
-        <Workspace id="form">
-          <WorkspacePanel>
-            <ToolbarPanel>
-              <DesignerToolsWidget use={'HISTORY'} />
-              <ViewToolsWidget use={['DESIGNABLE', 'PREVIEW', 'JSONTREE']} />
-            </ToolbarPanel>
-            <ViewportPanel>
-              <ViewPanel type="DESIGNABLE">
-                {() => (
-                  <ComponentTreeWidget
-                    components={{
-                      Field,
-                    }}
-                  />
-                )}
-              </ViewPanel>
-              <ViewPanel type="JSONTREE" scrollable={false}>
-                {(tree, onChange) => (
-                  <SchemaEditorWidget tree={tree} onChange={onChange} />
-                )}
-              </ViewPanel>
-              <ViewPanel type="PREVIEW">
-                {(tree) => <PreviewWidget tree={tree} />}
-              </ViewPanel>
-            </ViewportPanel>
-          </WorkspacePanel>
-        </Workspace>
-        <SettingsPanel title="panels.PropertySettings">
-          <SettingsForm uploadAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" />
-        </SettingsPanel>
-      </StudioPanel>
+      <Workbench>
+        <StudioPanel logo={<LogoWidget />}>
+          <CompositePanel>
+            {CompositePanel.Item && (
+              <CompositePanel.Item title="panels.Component" icon="Component">
+                <ResourceWidget title="sources.Inputs" sources={[]} />
+                <ResourceWidget title="sources.Layouts" sources={[]} />
+                <ResourceWidget title="sources.Displays" sources={[]} />
+              </CompositePanel.Item>
+            )}
+            {CompositePanel.Item && (
+              <CompositePanel.Item title="panels.OutlinedTree" icon="Outline">
+                <OutlineTreeWidget />
+              </CompositePanel.Item>
+            )}
+            {CompositePanel.Item && (
+              <CompositePanel.Item title="panels.History" icon="History">
+                <HistoryWidget />
+              </CompositePanel.Item>
+            )}
+          </CompositePanel>
+          <Workspace formId="form" />
+          <SettingsPanel title="panels.PropertySettings">
+            <SettingsForm uploadAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" />
+          </SettingsPanel>
+        </StudioPanel>
+      </Workbench>
     </Designer>
   );
 };
