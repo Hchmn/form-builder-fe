@@ -1,4 +1,6 @@
-export const Field = {
+import { IDesignerLocales } from '@designable/core';
+
+export const Field: IDesignerLocales = {
   'en-US': {
     settings: {
       name: 'Name',

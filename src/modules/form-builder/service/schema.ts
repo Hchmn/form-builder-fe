@@ -41,7 +41,7 @@ export const initDesigner = () => {
 
 export const saveSchema = (designer: Engine) => {
   localStorage.setItem(
-    'formily-schema',
+    designer.workbench.currentWorkspace.id,
     JSON.stringify(transformToSchema(designer.getCurrentTree())),
   );
   message.success('Save Success');
@@ -49,7 +49,7 @@ export const saveSchema = (designer: Engine) => {
 
 export const newSchema = (designer: Engine) => {
   designer.setCurrentTree(transformToTreeNode(DEFAULT_FORM));
-  localStorage.removeItem('formily-schema');
+  localStorage.removeItem(designer.workbench.currentWorkspace.id);
 };
 
 export const loadSchema = (designer: Engine, obj: any) => {
@@ -68,7 +68,9 @@ export const loadOfflineSchema = (designer: Engine) => {
   try {
     designer.setCurrentTree(
       transformToTreeNode(
-        JSON.parse(localStorage.getItem('formily-schema') || '{}'),
+        JSON.parse(
+          localStorage.getItem(designer.workbench.currentWorkspace.id) || '{}',
+        ),
       ),
     );
   } catch {
@@ -83,6 +85,6 @@ export const submitSchema = async (designer: Engine, values: object) => {
     design: transformToSchema(designer.getCurrentTree()),
   };
   await publishForm(data);
-  localStorage.removeItem('formily-schema');
+  localStorage.removeItem(designer.workbench.currentWorkspace.id);
   message.success('Submit Success');
 };
