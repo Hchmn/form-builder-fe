@@ -32,6 +32,7 @@ GlobalRegistry.registerDesignerLocales({
 const FormEditor: React.FC = ({ children }) => {
   const engine = useMemo(() => initDesigner(), []);
 
+  engine.workbench.removeWorkspace('index');
   engine.workbench.addWorkspace({ id: 'form-0', title: 'form-0' });
   return (
     <Designer engine={engine}>
