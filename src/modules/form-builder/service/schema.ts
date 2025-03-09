@@ -22,8 +22,26 @@ const DEFAULT_FORM = {
   },
 };
 
-export const initDesigner = () => {
-  return createDesigner({
+interface InitDesignerProps {
+  formId?: string;
+  title?: string;
+}
+
+/**
+ * Creates the designer engine with default form
+ */
+export const initDesigner = (props: InitDesignerProps = {}) => {
+  const defaultProps: Required<InitDesignerProps> = {
+    formId: 'form-0',
+    title: 'form-0',
+  };
+
+  const { formId, title } = {
+    ...props,
+    ...defaultProps,
+  };
+
+  const engine = createDesigner({
     shortcuts: [
       new Shortcut({
         codes: [
@@ -37,6 +55,13 @@ export const initDesigner = () => {
     ],
     rootComponentName: 'Form',
   });
+
+  engine.workbench.removeWorkspace('index');
+  engine.workbench.addWorkspace({ id: formId, title });
+  const workspace = engine.workbench.switchWorkspace(formId);
+  engine.workbench.setActiveWorkspace(workspace);
+
+  return engine;
 };
 
 export const saveSchema = (designer: Engine) => {
