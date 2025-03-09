@@ -1,4 +1,6 @@
-export const Component = {
+import { IDesignerLocales } from '@designable/core';
+
+export const Component: IDesignerLocales = {
   'en-US': {
     settings: {
       style: {

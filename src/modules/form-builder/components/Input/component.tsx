@@ -1,31 +1,31 @@
 import { createBehavior, createResource } from '@designable/core';
+import { DnFC } from '@designable/react';
 import { Input as FormilyInput } from '@formily/antd';
-import { createFieldSchema } from '../Field';
-import { AllSchemas } from '../../schemas';
 import { AllLocales } from '../../locales';
-import type { INodeSchema } from '@designable/core';
+import { AllSchemas } from '../../schemas';
+import { createFieldSchema } from '../Field';
 
-export const Input = FormilyInput as typeof FormilyInput & {
-  Behavior?: ReturnType<typeof createBehavior>;
-  Resource?: ReturnType<typeof createResource>;
-};
+export const Input: DnFC<React.ComponentProps<typeof FormilyInput>> =
+  FormilyInput;
 
 Input.Behavior = createBehavior(
   {
     name: 'Input',
     extends: ['Field'],
-    selector: (node) => node.props['x-component'] === 'Input',
+    selector: (node) =>
+      Boolean(node.props && node.props['x-component'] === 'Input'),
     designerProps: {
-      propsSchema: createFieldSchema(AllSchemas.Input) as INodeSchema,
+      propsSchema: createFieldSchema(AllSchemas.Input),
     },
     designerLocales: AllLocales.Input,
   },
   {
     name: 'Input.TextArea',
     extends: ['Field'],
-    selector: (node) => node.props['x-component'] === 'Input.TextArea',
+    selector: (node) =>
+      Boolean(node.props && node.props['x-component'] === 'Input.TextArea'),
     designerProps: {
-      propsSchema: createFieldSchema(AllSchemas.Input.TextArea) as INodeSchema,
+      propsSchema: createFieldSchema(AllSchemas.Input.TextArea),
     },
     designerLocales: AllLocales.TextArea,
   },

@@ -11,7 +11,7 @@ export const Container: FC<ContainerProps> = observer((props) => {
   return <DroppableWidget {...props}>{props.children}</DroppableWidget>;
 });
 
-export const withContainer = <P extends object>(Target: ComponentType<P>) => {
+export const WithContainer = <P extends object>(Target: ComponentType<P>) => {
   const WrappedComponent: FC<P> = (props) => {
     return (
       <DroppableWidget {...(props as IDroppableWidgetProps)}>

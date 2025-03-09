@@ -22,8 +22,26 @@ const DEFAULT_FORM = {
   },
 };
 
-export const initDesigner = () => {
-  return createDesigner({
+interface InitDesignerProps {
+  formId?: string;
+  title?: string;
+}
+
+/**
+ * Creates the designer engine with default form
+ */
+export const initDesigner = (props: InitDesignerProps = {}) => {
+  const defaultProps: Required<InitDesignerProps> = {
+    formId: 'form-0',
+    title: 'form-0',
+  };
+
+  const { formId, title } = {
+    ...props,
+    ...defaultProps,
+  };
+
+  const engine = createDesigner({
     shortcuts: [
       new Shortcut({
         codes: [
@@ -37,11 +55,18 @@ export const initDesigner = () => {
     ],
     rootComponentName: 'Form',
   });
+
+  engine.workbench.removeWorkspace('index');
+  engine.workbench.addWorkspace({ id: formId, title });
+  const workspace = engine.workbench.switchWorkspace(formId);
+  engine.workbench.setActiveWorkspace(workspace);
+
+  return engine;
 };
 
 export const saveSchema = (designer: Engine) => {
   localStorage.setItem(
-    'formily-schema',
+    designer.workbench.currentWorkspace.id,
     JSON.stringify(transformToSchema(designer.getCurrentTree())),
   );
   message.success('Save Success');
@@ -49,10 +74,9 @@ export const saveSchema = (designer: Engine) => {
 
 export const newSchema = (designer: Engine) => {
   designer.setCurrentTree(transformToTreeNode(DEFAULT_FORM));
-  localStorage.removeItem('formily-schema');
+  localStorage.removeItem(designer.workbench.currentWorkspace.id);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const loadSchema = (designer: Engine, obj: any) => {
   try {
     const form = JSON?.parse(obj['form-schema-file']);
@@ -69,7 +93,9 @@ export const loadOfflineSchema = (designer: Engine) => {
   try {
     designer.setCurrentTree(
       transformToTreeNode(
-        JSON.parse(localStorage.getItem('formily-schema') || '{}'),
+        JSON.parse(
+          localStorage.getItem(designer.workbench.currentWorkspace.id) || '{}',
+        ),
       ),
     );
   } catch {
@@ -84,6 +110,6 @@ export const submitSchema = async (designer: Engine, values: object) => {
     design: transformToSchema(designer.getCurrentTree()),
   };
   await publishForm(data);
-  localStorage.removeItem('formily-schema');
+  localStorage.removeItem(designer.workbench.currentWorkspace.id);
   message.success('Submit Success');
 };

@@ -6,6 +6,7 @@ import {
 
 import { AllSchemas } from '../../schemas';
 import { FormItemSwitcher } from '../../FormItemSwitcher';
+import { ISchema } from '@formily/react';
 
 export const createComponentSchema = (component: any, decorator: any) => {
   return {
@@ -74,7 +75,7 @@ export const createComponentSchema = (component: any, decorator: any) => {
 export const createFieldSchema = (
   component: any,
   decorator = AllSchemas.FormItem,
-) => {
+): ISchema => {
   return {
     type: 'object',
     properties: {

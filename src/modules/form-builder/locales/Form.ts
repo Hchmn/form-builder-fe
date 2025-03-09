@@ -1,7 +1,7 @@
-import { createLocales } from '@designable/core';
+import { createLocales, IDesignerLocales } from '@designable/core';
 import { Component } from './Component';
 
-export const Form = createLocales(Component, {
+export const Form: IDesignerLocales = createLocales(Component, {
   'en-US': {
     title: 'Form',
     settings: {
