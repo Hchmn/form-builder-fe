@@ -1,22 +1,21 @@
 import {
+  ComponentTreeWidget,
   Workspace as DesignableWorksapce,
-  WorkspacePanel,
-  ToolbarPanel,
   DesignerToolsWidget,
+  IDesignerComponents,
+  ToolbarPanel,
+  ViewPanel,
   ViewToolsWidget,
   ViewportPanel,
-  ViewPanel,
-  ComponentTreeWidget,
-  IDesignerComponents,
+  WorkspacePanel,
 } from '@designable/react';
 
-import { Field } from './components';
-import SchemaEditorWidget from './widgets/SchemaEditorWidget';
-import PreviewWidget from './widgets/PreviewWidget';
-import { FC, ReactElement } from 'react';
 import { Workspace as WorkspaceModel } from '@designable/core';
-import { transformToSchema } from '@designable/formily-transformer';
 import { Observer } from '@formily/react';
+import { FC, ReactElement } from 'react';
+import { Field } from './components';
+import PreviewWidget from './widgets/PreviewWidget';
+import SchemaEditorWidget from './widgets/SchemaEditorWidget';
 
 interface WorkspaceProps {
   widgetComponents?: IDesignerComponents;
@@ -29,15 +28,12 @@ export const Workspace: FC<WorkspaceProps> = ({
   activeWorkspace,
   workspaceTabs,
 }) => {
-  console.log(
-    JSON.stringify(transformToSchema(activeWorkspace.operation.tree), null, 2),
-  );
   return (
     <>
       <DesignableWorksapce id={activeWorkspace.id}>
         <WorkspacePanel>
           <ToolbarPanel>
-            <div>
+            <div id="form-tabs">
               <Observer>{workspaceTabs}</Observer>
             </div>
           </ToolbarPanel>
