@@ -13,7 +13,6 @@ export const ActionsWidget = () => {
     });
 
     const formTitle = `form-${number}`;
-    console.log(formTitle);
 
     workbench.addWorkspace({ id: formTitle, title: formTitle });
   };

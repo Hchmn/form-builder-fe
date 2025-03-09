@@ -1,15 +1,14 @@
 import { Engine } from '@designable/core';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
-
 import {
   transformToSchema,
   transformToTreeNode,
 } from '@designable/formily-transformer';
 import { Designer, useDesigner } from '@designable/react';
 import { Observer } from '@formily/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { FC } from 'react';
+import { describe, expect, it } from 'vitest';
 import { WorkspaceManager } from './WorkspaceManager';
 
 describe('Workspace', () => {

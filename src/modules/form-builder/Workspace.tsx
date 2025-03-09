@@ -30,7 +30,7 @@ export const Workspace: FC<WorkspaceProps> = ({
 }) => {
   return (
     <>
-      <DesignableWorksapce id={activeWorkspace.id}>
+      <DesignableWorksapce id={activeWorkspace.id} key={activeWorkspace.id}>
         <WorkspacePanel>
           <ToolbarPanel>
             <div id="form-tabs">
