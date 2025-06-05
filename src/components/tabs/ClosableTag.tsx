@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Input, Tag } from 'antd';
+import { Tag } from 'antd';
 
 interface ClosableTagProps {
   closeIcon?: ReactNode;
