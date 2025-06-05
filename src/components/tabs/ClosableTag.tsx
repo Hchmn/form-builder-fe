@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Tag } from 'antd';
+import { Input, Tag } from 'antd';
 
 interface ClosableTagProps {
   closeIcon?: ReactNode;
@@ -28,7 +28,10 @@ export const CloseableTag: FC<ClosableTagProps> = ({
         icon={icon}
         closeIcon={closeIcon}
         closable={closable}
-        onClose={onClose}
+        onClose={(e) => {
+          e.preventDefault();
+          onClose();
+        }}
         style={{
           alignItems: 'center',
           justifyContent: 'space-between',
