@@ -26,9 +26,10 @@ export const WorkspaceManager = () => {
   };
 
   const workspaceTabs = () =>
-    workbench.mapWorkspace((workspace) => (
+    workbench.mapWorkspace((workspace, index) => (
       <CloseableTag
         label={workspace.title}
+        key={index}
         color={
           workbench.currentWorkspace.id === workspace.id ? 'blue' : 'default'
         }
