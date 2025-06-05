@@ -4,6 +4,7 @@ import {
 } from '@designable/formily-transformer';
 import { message } from 'antd';
 import { createDesigner, Shortcut, KeyCode, Engine } from '@designable/core';
+import { GenerateRandomId } from '../../../constants';
 
 const publishForm = async (data: object) => {
   console.log('DATA', data);
@@ -32,8 +33,8 @@ interface InitDesignerProps {
  */
 export const initDesigner = (props: InitDesignerProps = {}) => {
   const defaultProps: Required<InitDesignerProps> = {
-    formId: 'form-0',
-    title: 'form-0',
+    formId: GenerateRandomId(),
+    title: 'Form-1',
   };
 
   const { formId, title } = {

@@ -1,6 +1,6 @@
 import {
   ComponentTreeWidget,
-  Workspace as DesignableWorksapce,
+  Workspace as DesignableWorkspace,
   DesignerToolsWidget,
   IDesignerComponents,
   ToolbarPanel,
@@ -30,7 +30,7 @@ export const Workspace: FC<WorkspaceProps> = ({
 }) => {
   return (
     <>
-      <DesignableWorksapce id={activeWorkspace.id} key={activeWorkspace.id}>
+      <DesignableWorkspace id={activeWorkspace.id} key={activeWorkspace.id}>
         <WorkspacePanel>
           <ToolbarPanel>
             <div id="form-tabs">
@@ -55,7 +55,7 @@ export const Workspace: FC<WorkspaceProps> = ({
             </ViewPanel>
           </ViewportPanel>
         </WorkspacePanel>
-      </DesignableWorksapce>
+      </DesignableWorkspace>
     </>
   );
 };

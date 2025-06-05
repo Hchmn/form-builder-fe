@@ -2,8 +2,8 @@ import { useTheme } from '@designable/react';
 import { baseUrl } from '../../../constants';
 
 const logo = {
-  dark: `${baseUrl}logo.jpeg`,
-  light: `${baseUrl}logo.jpeg`,
+  dark: `${baseUrl}/src/assets/img/form-builder-logo.png`,
+  light: `${baseUrl}/src/assets/img/form-builder-logo.png`,
 };
 
 export const LogoWidget = () => {

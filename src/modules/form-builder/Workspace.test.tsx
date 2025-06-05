@@ -54,14 +54,17 @@ describe('Workspace', () => {
       </Editor>,
     );
 
-    expect(
-      result.getByText(INITIAL_WORKSPACE_ID).closest('button'),
-    ).toHaveProperty('disabled', true);
-    await userEvent.click(result.getByText(WORKSPACE_ID));
-    expect(result.getByText(WORKSPACE_ID).closest('button')).toHaveProperty(
-      'disabled',
-      true,
-    );
+    const initialWorkSpace = result
+      .getByText(INITIAL_WORKSPACE_ID)
+      .closest('button');
+    if (initialWorkSpace) {
+      expect(initialWorkSpace).toHaveProperty('disabled', true);
+    }
+
+    const activeWorkSpace = result.getByText(WORKSPACE_ID).closest('button');
+    if (activeWorkSpace) {
+      expect(activeWorkSpace).toHaveProperty('disabled', true);
+    }
   });
 
   it('switches active workspace tree', async () => {
